@@ -1,0 +1,8 @@
+pterodactyl:
+  url: https://pterodactyl.exemple.com
+  token: abc
+queue:
+  server: lobby
+servers:
+  lobby:
+    id: abc
