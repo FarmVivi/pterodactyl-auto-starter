@@ -11,7 +11,6 @@ import fr.farmvivi.pterodactylautostarter.listener.ProxyPingEventListener;
 import fr.farmvivi.pterodactylautostarter.listener.ServerConnectEventListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;

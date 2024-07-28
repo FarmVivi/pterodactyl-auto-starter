@@ -1,8 +1,8 @@
 package fr.farmvivi.pterodactylautostarter.bungee.listener;
 
+import fr.farmvivi.pterodactylautostarter.bungee.BungeeProxy;
 import fr.farmvivi.pterodactylautostarter.bungee.BungeeServer;
 import fr.farmvivi.pterodactylautostarter.common.CommonPlayer;
-import fr.farmvivi.pterodactylautostarter.common.CommonProxy;
 import fr.farmvivi.pterodactylautostarter.common.CommonServer;
 import fr.farmvivi.pterodactylautostarter.common.event.ServerConnectEvent;
 import fr.farmvivi.pterodactylautostarter.common.listener.EventListener;
@@ -12,21 +12,21 @@ import net.md_5.bungee.event.EventHandler;
 import java.util.Collection;
 
 public class BungeeServerConnectEventListener implements Listener {
-    private final CommonProxy proxy;
+    private final BungeeProxy bungeeProxy;
     private final Collection<EventListener> eventListeners;
 
-    public BungeeServerConnectEventListener(CommonProxy proxy, Collection<EventListener> eventListeners) {
-        this.proxy = proxy;
+    public BungeeServerConnectEventListener(BungeeProxy bungeeProxy, Collection<EventListener> eventListeners) {
+        this.bungeeProxy = bungeeProxy;
         this.eventListeners = eventListeners;
     }
 
     @EventHandler
     public void onServerConnect(net.md_5.bungee.api.event.ServerConnectEvent event) {
         // Get the player
-        CommonPlayer player = proxy.getPlayer(event.getPlayer().getUniqueId());
+        CommonPlayer player = bungeeProxy.getPlayer(event.getPlayer());
 
         // Get the target server
-        CommonServer targetServer = proxy.getServer(event.getTarget().getName());
+        CommonServer targetServer = bungeeProxy.getServer(event.getTarget().getName());
 
         // Construct the event
         ServerConnectEvent serverConnectEvent = new ServerConnectEvent(player, targetServer);

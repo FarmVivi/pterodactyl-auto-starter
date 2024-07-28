@@ -116,6 +116,16 @@ public class BungeeProxy implements CommonProxy, EventListener {
         return null;
     }
 
+    public CommonPlayer getPlayer(ProxiedPlayer player) {
+        // Retrieve the player UUID
+        UUID uuid = player.getUniqueId();
+        // Cache the player if it is not already cached
+        playersCache.computeIfAbsent(uuid, k -> new BungeePlayer(this, player));
+
+        // Return the player
+        return playersCache.get(uuid);
+    }
+
     @Override
     public CommonPlayer[] getPlayers() {
         // Retrieve all the players data from BungeeCord
