@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>pterodactyl-auto-starter-velocity</artifactId>
+    <name>PterodactylAutoStarter-Velocity</name>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

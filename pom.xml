@@ -9,6 +9,8 @@
     <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <name>PterodactylAutoStarter</name>
+
     <modules>
         <module>common</module>
         <module>bungee</module>

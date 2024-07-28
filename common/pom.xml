@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>pterodactyl-auto-starter-common</artifactId>
+    <name>PterodactylAutoStarter-Common</name>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
