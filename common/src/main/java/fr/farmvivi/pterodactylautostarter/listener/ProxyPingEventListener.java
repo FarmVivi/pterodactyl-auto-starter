@@ -47,6 +47,9 @@ public class ProxyPingEventListener extends EventAdapter {
     @Override
     public void onProxyPing(ProxyPingEvent event) {
         String host = event.getHost();
+        if (host == null || host.isEmpty()) {
+            return;
+        }
         if (forcedHosts.containsKey(host)) {
             CommonServer commonServer = forcedHosts.get(host);
             if (plugin.getServers().containsKey(commonServer)) {
@@ -59,6 +62,7 @@ public class ProxyPingEventListener extends EventAdapter {
 //                        response.setFavicon(serverPing.getFavicon());
 //                        response.setDescriptionComponent(serverPing.getDescriptionComponent());
 //                        response.setPlayers(serverPing.getPlayers());
+                        return;
                     }
                     case OFFLINE -> {
                         List<Component> players = new LinkedList<>();

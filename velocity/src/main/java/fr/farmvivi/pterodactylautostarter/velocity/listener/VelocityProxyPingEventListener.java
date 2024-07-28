@@ -23,13 +23,12 @@ public class VelocityProxyPingEventListener {
 
     @Subscribe
     public void onProxyPing(com.velocitypowered.api.event.proxy.ProxyPingEvent event) {
-        if (event.getConnection().getVirtualHost().isEmpty()) {
-            logger.warning("Received a ProxyPingEvent with an empty virtual host from " + event.getConnection().getRemoteAddress());
-            return;
-        }
+        String host = null;
 
         // Get the host
-        String host = event.getConnection().getVirtualHost().get().getHostString();
+        if (event.getConnection().getVirtualHost().isPresent()) {
+            host = event.getConnection().getVirtualHost().get().getHostString();
+        }
 
         // Construct the event
         ProxyPingEvent proxyPingEvent = new ProxyPingEvent(host, new VelocityServerPing(event.getPing()));
