@@ -74,7 +74,6 @@ public class ProxyPingEventListener extends EventAdapter {
                         response.setMaxPlayers(0);
                         response.setOnlinePlayers(0);
                         response.setSamplePlayers(players);
-                        //response.setDescriptionComponent(new TextComponent("Serveur " + ChatColor.YELLOW + commonServer.getDisplayName() + ChatColor.RED + " hors-ligne\n" + ChatColor.GRAY + "Connectez-vous pour le démarrer !"));
                         response.setDescriptionComponent(Component.text("Serveur ").append(Component.text(commonServer.getDisplayName()).color(NamedTextColor.YELLOW)).append(Component.text(" hors-ligne").color(NamedTextColor.RED)).appendNewline().append(Component.text("Connectez-vous pour le démarrer !").color(NamedTextColor.GRAY)));
                         response.setProtocolVersion(-1);
                         response.setProtocolName(Component.text("Hors-ligne").color(NamedTextColor.RED));
@@ -85,33 +84,23 @@ public class ProxyPingEventListener extends EventAdapter {
                     case STARTING -> {
                         int nbPlayers = server.getQueue().size();
                         List<Component> players = new LinkedList<>();
-//                        players.add(new ServerPing.PlayerInfo(ChatColor.GOLD + "Démarrage...", ""));
                         players.add(Component.text("Démarrage...").color(NamedTextColor.GOLD));
-//                        players.add(new ServerPing.PlayerInfo("", ""));
                         players.add(Component.text(""));
-//                        players.add(new ServerPing.PlayerInfo(ChatColor.GRAY + "Connectez-vous", ""));
                         players.add(Component.text("Connectez-vous").color(NamedTextColor.GRAY));
-//                        players.add(new ServerPing.PlayerInfo(ChatColor.GRAY + "pour rejoindre la", ""));
                         players.add(Component.text("pour rejoindre la").color(NamedTextColor.GRAY));
-//                        players.add(new ServerPing.PlayerInfo(ChatColor.GRAY + "file d'attente de", ""));
                         players.add(Component.text("file d'attente de").color(NamedTextColor.GRAY));
-//                        players.add(new ServerPing.PlayerInfo(ChatColor.YELLOW + commonServer.getMotd(), ""));
                         players.add(Component.text(commonServer.getDisplayName()).color(NamedTextColor.YELLOW));
                         if (nbPlayers > 0) {
-//                            players.add(new ServerPing.PlayerInfo("", ""));
                             players.add(Component.text(""));
 
-//                            players.add(new ServerPing.PlayerInfo(ChatColor.GRAY + "File d'attente :", ""));
                             players.add(Component.text("File d'attente :").color(NamedTextColor.GRAY));
                             for (CommonPlayer player : server.getQueue()) {
-//                                players.add(new ServerPing.PlayerInfo(player.getDisplayName(), player.getUniqueId()));
                                 players.add(Component.text(player.getDisplayName()).color(NamedTextColor.GRAY));
                             }
                         }
                         response.setMaxPlayers(-1);
                         response.setOnlinePlayers(nbPlayers);
                         response.setSamplePlayers(players);
-                        //response.setDescriptionComponent(new TextComponent("Serveur " + ChatColor.YELLOW + commonServer.getDisplayName() + ChatColor.GOLD + " en démarrage...\n" + ChatColor.GRAY + "Connectez-vous pour rejoindre la file d'attente !"));
                         response.setDescriptionComponent(Component.text("Serveur ").append(Component.text(commonServer.getDisplayName()).color(NamedTextColor.YELLOW)).append(Component.text(" en démarrage...").color(NamedTextColor.GOLD)).appendNewline().append(Component.text("Connectez-vous pour rejoindre la file d'attente !").color(NamedTextColor.GRAY)));
                         response.setProtocolVersion(-1);
                         response.setProtocolName(Component.text("Démarrage...").color(NamedTextColor.GOLD));

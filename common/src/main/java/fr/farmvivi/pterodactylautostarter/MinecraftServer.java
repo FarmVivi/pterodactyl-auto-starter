@@ -35,19 +35,15 @@ public class MinecraftServer {
             // Refresh status
             if (serverPing == null && result != null) {
                 status = MinecraftServerStatus.ONLINE;
-                //plugin.getLogger().info(ChatColor.YELLOW + server.getName() + ChatColor.GREEN + " en ligne.");
                 plugin.getLogger().info(Component.text(server.getName()).color(NamedTextColor.YELLOW).append(Component.text(" en ligne.").color(NamedTextColor.GREEN)));
             } else if (serverPing != null && result == null && !status.equals(MinecraftServerStatus.STARTING) || status.equals(MinecraftServerStatus.STARTING) && lastBusyTime < curMillis) {
                 status = MinecraftServerStatus.OFFLINE;
-                //plugin.getLogger().info(ChatColor.YELLOW + server.getName() + ChatColor.RED + " hors-ligne.");
                 plugin.getLogger().info(Component.text(server.getName()).color(NamedTextColor.YELLOW).append(Component.text(" hors-ligne.").color(NamedTextColor.RED)));
                 if (!queue.isEmpty()) {
                     Iterator<CommonPlayer> iterator = queue.iterator();
                     while (iterator.hasNext()) {
                         CommonPlayer player = iterator.next();
-                        //plugin.getLogger().warning("Impossible de téléporter " + player.getName() + " sur " + server.getName());
                         plugin.getLogger().warning("Impossible de téléporter " + player.getUsername() + " sur " + server.getName());
-                        //player.sendMessage(new TextComponent(ChatColor.RED + "Téléportation sur le serveur " + ChatColor.YELLOW + server.getDisplayName() + ChatColor.RED + " impossible !"));
                         player.sendMessage(Component.text("Téléportation sur le serveur ").color(NamedTextColor.RED).append(Component.text(server.getDisplayName()).color(NamedTextColor.YELLOW)).append(Component.text(" impossible !").color(NamedTextColor.RED)));
                         iterator.remove();
                     }
@@ -65,9 +61,7 @@ public class MinecraftServer {
                             iterator.remove();
                             continue;
                         }
-                        //plugin.getLogger().info("Téléportation de " + player.getName() + " sur " + server.getName());
                         plugin.getLogger().info("Téléportation de " + player.getUsername() + " sur " + server.getName());
-                        //player.sendMessage(new TextComponent(ChatColor.GREEN + "Téléportation sur le serveur " + ChatColor.YELLOW + server.getDisplayName() + ChatColor.GREEN + "..."));
                         player.sendMessage(Component.text("Téléportation sur le serveur ").color(NamedTextColor.GREEN).append(Component.text(server.getDisplayName()).color(NamedTextColor.YELLOW)).append(Component.text("...").color(NamedTextColor.GREEN)));
                         player.connectToServer(server);
                     }
