@@ -16,9 +16,11 @@ public class PlayerDisconnectEventListener extends EventAdapter {
     @Override
     public void onPlayerDisconnect(PlayerDisconnectEvent event) {
         CommonPlayer player = event.getPlayer();
+
         if (player == null) {
             return;
         }
+
         for (MinecraftServer server : plugin.getServers().values()) {
             server.getQueue().removeIf(proxiedPlayer -> proxiedPlayer.equals(player));
         }

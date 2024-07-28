@@ -22,11 +22,13 @@ public class ServerConnectEventListener extends EventAdapter {
     @Override
     public void onServerConnect(ServerConnectEvent event) {
         CommonServer target = event.getTarget();
+        CommonPlayer player = event.getPlayer();
+
+        if (player == null) {
+            return;
+        }
+
         if (plugin.getServers().containsKey(target)) {
-            CommonPlayer player = event.getPlayer();
-            if (player == null) {
-                return;
-            }
             MinecraftServer server = plugin.getServers().get(target);
             MinecraftServerStatus serverStatus = server.getStatus();
             if (serverStatus.equals(MinecraftServerStatus.OFFLINE) || serverStatus.equals(MinecraftServerStatus.STARTING)) {
