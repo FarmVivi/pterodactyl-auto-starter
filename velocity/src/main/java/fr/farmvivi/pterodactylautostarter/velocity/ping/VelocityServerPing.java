@@ -47,22 +47,46 @@ public class VelocityServerPing implements CommonServerPing {
 
     @Override
     public int getProtocolVersion() {
-        return serverPingBuilder.getVersion().getProtocol();
+        int protocolVersion = -1;
+
+        if (serverPingBuilder.getVersion() != null) {
+            protocolVersion = serverPingBuilder.getVersion().getProtocol();
+        }
+
+        return protocolVersion;
     }
 
     @Override
     public void setProtocolVersion(int protocolVersion) {
-        serverPingBuilder.version(new ServerPing.Version(protocolVersion, serverPingBuilder.getVersion().getName()));
+        String protocolName = "";
+
+        if (serverPingBuilder.getVersion() != null && serverPingBuilder.getVersion().getName() != null) {
+            protocolName = serverPingBuilder.getVersion().getName();
+        }
+
+        serverPingBuilder.version(new ServerPing.Version(protocolVersion, protocolName));
     }
 
     @Override
     public Component getProtocolName() {
-        return LegacyComponentSerializer.legacySection().deserialize(serverPingBuilder.getVersion().getName());
+        String protocolName = "";
+
+        if (serverPingBuilder.getVersion() != null && serverPingBuilder.getVersion().getName() != null) {
+            protocolName = serverPingBuilder.getVersion().getName();
+        }
+
+        return LegacyComponentSerializer.legacySection().deserialize(protocolName);
     }
 
     @Override
     public void setProtocolName(Component protocolName) {
-        serverPingBuilder.version(new ServerPing.Version(serverPingBuilder.getVersion().getProtocol(), LegacyComponentSerializer.legacySection().serialize(protocolName)));
+        int protocolVersion = -1;
+
+        if (serverPingBuilder.getVersion() != null) {
+            protocolVersion = serverPingBuilder.getVersion().getProtocol();
+        }
+
+        serverPingBuilder.version(new ServerPing.Version(protocolVersion, LegacyComponentSerializer.legacySection().serialize(protocolName)));
     }
 
     @Override

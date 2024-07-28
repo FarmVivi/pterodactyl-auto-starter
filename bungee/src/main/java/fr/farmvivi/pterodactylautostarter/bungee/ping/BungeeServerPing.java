@@ -48,22 +48,46 @@ public class BungeeServerPing implements CommonServerPing {
 
     @Override
     public int getProtocolVersion() {
-        return serverPing.getVersion().getProtocol();
+        int protocolVersion = -1;
+
+        if (serverPing.getVersion() != null) {
+            protocolVersion = serverPing.getVersion().getProtocol();
+        }
+
+        return protocolVersion;
     }
 
     @Override
     public void setProtocolVersion(int protocolVersion) {
-        serverPing = new ServerPing(new ServerPing.Protocol(serverPing.getVersion().getName(), protocolVersion), serverPing.getPlayers(), serverPing.getDescriptionComponent(), serverPing.getFaviconObject());
+        String protocolName = "";
+
+        if (serverPing.getVersion() != null && serverPing.getVersion().getName() != null) {
+            protocolName = serverPing.getVersion().getName();
+        }
+
+        serverPing = new ServerPing(new ServerPing.Protocol(protocolName, protocolVersion), serverPing.getPlayers(), serverPing.getDescriptionComponent(), serverPing.getFaviconObject());
     }
 
     @Override
     public Component getProtocolName() {
-        return LegacyComponentSerializer.legacySection().deserialize(serverPing.getVersion().getName());
+        String protocolName = "";
+
+        if (serverPing.getVersion() != null && serverPing.getVersion().getName() != null) {
+            protocolName = serverPing.getVersion().getName();
+        }
+
+        return LegacyComponentSerializer.legacySection().deserialize(protocolName);
     }
 
     @Override
     public void setProtocolName(Component protocolName) {
-        serverPing = new ServerPing(new ServerPing.Protocol(LegacyComponentSerializer.legacySection().serialize(protocolName), serverPing.getVersion().getProtocol()), serverPing.getPlayers(), serverPing.getDescriptionComponent(), serverPing.getFaviconObject());
+        int protocolVersion = -1;
+
+        if (serverPing.getVersion() != null && serverPing.getVersion().getProtocol() != -1) {
+            protocolVersion = serverPing.getVersion().getProtocol();
+        }
+
+        serverPing = new ServerPing(new ServerPing.Protocol(LegacyComponentSerializer.legacySection().serialize(protocolName), protocolVersion), serverPing.getPlayers(), serverPing.getDescriptionComponent(), serverPing.getFaviconObject());
     }
 
     @Override
