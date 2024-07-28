@@ -24,10 +24,13 @@ public class ServerConnectEventListener extends EventAdapter {
         CommonServer target = event.getTarget();
         if (plugin.getServers().containsKey(target)) {
             CommonPlayer player = event.getPlayer();
+            if (player == null) {
+                return;
+            }
             MinecraftServer server = plugin.getServers().get(target);
             MinecraftServerStatus serverStatus = server.getStatus();
             if (serverStatus.equals(MinecraftServerStatus.OFFLINE) || serverStatus.equals(MinecraftServerStatus.STARTING)) {
-                if (event.getPlayer().getServer() == null) {
+                if (player.getServer() == null) {
                     event.setTarget(limboServer);
                 } else {
                     event.setCancelled(true);
