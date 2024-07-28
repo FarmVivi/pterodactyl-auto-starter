@@ -182,8 +182,14 @@ public class VelocityProxy implements CommonProxy, EventListener {
 
     @Override
     public void onPlayerDisconnect(PlayerDisconnectEvent event) {
-        // Remove the player from the cache
-        playersCache.remove(event.getPlayer().getUniqueId());
+        // Retrieve the player
+        CommonPlayer player = event.getPlayer();
+
+        // If player is not null
+        if (player != null) {
+            // Remove the player from the cache
+            playersCache.remove(player.getUniqueId());
+        }
     }
 
     @Override
