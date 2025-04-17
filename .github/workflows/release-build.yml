@@ -1,0 +1,51 @@
+name: Release Build
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build-jar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: "temurin"
+          cache: maven
+
+      # Étape pour enlever "-SNAPSHOT" dans le pom.xml
+      - name: Remove -SNAPSHOT from pom.xml
+        run: mvn versions:set -DremoveSnapshot -DgenerateBackupPoms=false
+
+      # Construction Maven
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+
+      # On récupère le vrai nom des jars Bungee et Velocity
+      - name: Find Bungee built jar name
+        id: find_bungee_jar
+        shell: bash
+        run: echo "bungee_jar=$(basename $(ls bungee/target/pterodactyl-auto-starter-bungee-*.jar))" >> $GITHUB_OUTPUT
+
+      - name: Find Velocity built jar name
+        id: find_velocity_jar
+        shell: bash
+        run: echo "velocity_jar=$(basename $(ls velocity/target/pterodactyl-auto-starter-velocity-*.jar))" >> $GITHUB_OUTPUT
+
+      # Upload des jars sur la release GitHub
+      - name: Upload Bungee JAR to release
+        uses: csexton/release-asset-action@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          file: bungee/target/${{ steps.find_bungee_jar.outputs.bungee_jar }}
+
+      - name: Upload Velocity JAR to release
+        uses: csexton/release-asset-action@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          file: velocity/target/${{ steps.find_velocity_jar.outputs.velocity_jar }}
