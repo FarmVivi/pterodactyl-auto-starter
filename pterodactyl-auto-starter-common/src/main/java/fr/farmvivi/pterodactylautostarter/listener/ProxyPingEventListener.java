@@ -22,7 +22,8 @@ import java.util.logging.Level;
 public class ProxyPingEventListener extends EventAdapter {
     private final PterodactylAutoStarter plugin;
     private final Map<String, CommonServer> forcedHosts;
-    private final CommonFavicon offlineFavicon, startingFavicon;
+    private final CommonFavicon offlineFavicon;
+    private final CommonFavicon startingFavicon;
 
     public ProxyPingEventListener(PterodactylAutoStarter plugin) {
         this.plugin = plugin;
@@ -47,10 +48,7 @@ public class ProxyPingEventListener extends EventAdapter {
     @Override
     public void onProxyPing(ProxyPingEvent event) {
         String host = event.getHost();
-        if (host == null || host.isEmpty()) {
-            return;
-        }
-        if (!forcedHosts.containsKey(host)) {
+        if (!isValidHost(host)) {
             return;
         }
         
@@ -69,6 +67,10 @@ public class ProxyPingEventListener extends EventAdapter {
         }
         
         event.setResponse(response);
+    }
+
+    private boolean isValidHost(String host) {
+        return host != null && !host.isEmpty() && forcedHosts.containsKey(host);
     }
 
     private void handleOnlineServer() {

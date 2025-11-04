@@ -50,48 +50,68 @@ public class LoggerProxy extends java.util.logging.Logger {
 
     @Override
     public void log(Level level, String msg) {
-        logger.log(level, msg);
+        if (logger.isLoggable(level)) {
+            logger.log(level, msg);
+        }
     }
 
     public void log(Level level, Component component) {
-        logger.log(level, convertComponentToLogacyComponent(component));
+        if (logger.isLoggable(level)) {
+            logger.log(level, convertComponentToLogacyComponent(component));
+        }
     }
 
     @Override
     public void log(Level level, Supplier<String> msgSupplier) {
-        logger.log(level, msgSupplier);
+        if (logger.isLoggable(level)) {
+            logger.log(level, msgSupplier);
+        }
     }
 
     @Override
     public void log(Level level, String msg, Object param1) {
-        logger.log(level, msg, param1);
+        if (logger.isLoggable(level)) {
+            logger.log(level, msg, param1);
+        }
     }
 
     public void log(Level level, Component component, Object param1) {
-        logger.log(level, convertComponentToLogacyComponent(component), param1);
+        if (logger.isLoggable(level)) {
+            logger.log(level, convertComponentToLogacyComponent(component), param1);
+        }
     }
 
     @Override
     public void log(Level level, String msg, Object[] params) {
-        logger.log(level, msg, params);
+        if (logger.isLoggable(level)) {
+            logger.log(level, msg, params);
+        }
     }
 
     public void log(Level level, Component component, Object[] params) {
-        logger.log(level, convertComponentToLogacyComponent(component), params);
+        if (logger.isLoggable(level)) {
+            logger.log(level, convertComponentToLogacyComponent(component), params);
+        }
     }
 
     @Override
     public void log(Level level, String msg, Throwable thrown) {
-        logger.log(level, msg, thrown);
+        if (logger.isLoggable(level)) {
+            logger.log(level, msg, thrown);
+        }
     }
 
     public void log(Level level, Component component, Throwable thrown) {
-        logger.log(level, convertComponentToLogacyComponent(component), thrown);
+        if (logger.isLoggable(level)) {
+            logger.log(level, convertComponentToLogacyComponent(component), thrown);
+        }
     }
 
     @Override
     public void log(Level level, Throwable thrown, Supplier<String> msgSupplier) {
-        logger.log(level, thrown, msgSupplier);
+        if (logger.isLoggable(level)) {
+            logger.log(level, thrown, msgSupplier);
+        }
     }
 
     @Override
@@ -137,79 +157,9 @@ public class LoggerProxy extends java.util.logging.Logger {
 
     @Override
     public void logp(Level level, String sourceClass, String sourceMethod, Throwable thrown, Supplier<String> msgSupplier) {
-        logger.logp(level, sourceClass, sourceMethod, thrown, msgSupplier);
-    }
-
-    @Override
-    public void logrb(Level level, String sourceClass, String sourceMethod, String bundleName, String msg) {
-        logger.logrb(level, sourceClass, sourceMethod, bundleName, msg);
-    }
-
-    public void logrb(Level level, String sourceClass, String sourceMethod, String bundleName, Component component) {
-        logger.logrb(level, sourceClass, sourceMethod, bundleName, convertComponentToLogacyComponent(component));
-    }
-
-    @Override
-    public void logrb(Level level, String sourceClass, String sourceMethod, String bundleName, String msg, Object param1) {
-        logger.logrb(level, sourceClass, sourceMethod, bundleName, msg, param1);
-    }
-
-    public void logrb(Level level, String sourceClass, String sourceMethod, String bundleName, Component component, Object param1) {
-        logger.logrb(level, sourceClass, sourceMethod, bundleName, convertComponentToLogacyComponent(component), param1);
-    }
-
-    @Override
-    public void logrb(Level level, String sourceClass, String sourceMethod, String bundleName, String msg, Object[] params) {
-        logger.logrb(level, sourceClass, sourceMethod, bundleName, msg, params);
-    }
-
-    public void logrb(Level level, String sourceClass, String sourceMethod, String bundleName, Component component, Object[] params) {
-        logger.logrb(level, sourceClass, sourceMethod, bundleName, convertComponentToLogacyComponent(component), params);
-    }
-
-    @Override
-    public void logrb(Level level, String sourceClass, String sourceMethod, ResourceBundle bundle, String msg, Object... params) {
-        logger.logrb(level, sourceClass, sourceMethod, bundle, msg, params);
-    }
-
-    public void logrb(Level level, String sourceClass, String sourceMethod, ResourceBundle bundle, Component component, Object... params) {
-        logger.logrb(level, sourceClass, sourceMethod, bundle, convertComponentToLogacyComponent(component), params);
-    }
-
-    @Override
-    public void logrb(Level level, ResourceBundle bundle, String msg, Object... params) {
-        logger.logrb(level, bundle, msg, params);
-    }
-
-    public void logrb(Level level, ResourceBundle bundle, Component component, Object... params) {
-        logger.logrb(level, bundle, convertComponentToLogacyComponent(component), params);
-    }
-
-    @Override
-    public void logrb(Level level, String sourceClass, String sourceMethod, String bundleName, String msg, Throwable thrown) {
-        logger.logrb(level, sourceClass, sourceMethod, bundleName, msg, thrown);
-    }
-
-    public void logrb(Level level, String sourceClass, String sourceMethod, String bundleName, Component component, Throwable thrown) {
-        logger.logrb(level, sourceClass, sourceMethod, bundleName, convertComponentToLogacyComponent(component), thrown);
-    }
-
-    @Override
-    public void logrb(Level level, String sourceClass, String sourceMethod, ResourceBundle bundle, String msg, Throwable thrown) {
-        logger.logrb(level, sourceClass, sourceMethod, bundle, msg, thrown);
-    }
-
-    public void logrb(Level level, String sourceClass, String sourceMethod, ResourceBundle bundle, Component component, Throwable thrown) {
-        logger.logrb(level, sourceClass, sourceMethod, bundle, convertComponentToLogacyComponent(component), thrown);
-    }
-
-    @Override
-    public void logrb(Level level, ResourceBundle bundle, String msg, Throwable thrown) {
-        logger.logrb(level, bundle, msg, thrown);
-    }
-
-    public void logrb(Level level, ResourceBundle bundle, Component component, Throwable thrown) {
-        logger.logrb(level, bundle, convertComponentToLogacyComponent(component), thrown);
+        if (logger.isLoggable(level)) {
+            logger.logp(level, sourceClass, sourceMethod, thrown, msgSupplier);
+        }
     }
 
     @Override
@@ -248,7 +198,9 @@ public class LoggerProxy extends java.util.logging.Logger {
     }
 
     public void severe(Component component) {
-        logger.severe(convertComponentToLogacyComponent(component));
+        if (logger.isLoggable(Level.SEVERE)) {
+            logger.severe(convertComponentToLogacyComponent(component));
+        }
     }
 
     @Override
@@ -257,7 +209,9 @@ public class LoggerProxy extends java.util.logging.Logger {
     }
 
     public void warning(Component component) {
-        logger.warning(convertComponentToLogacyComponent(component));
+        if (logger.isLoggable(Level.WARNING)) {
+            logger.warning(convertComponentToLogacyComponent(component));
+        }
     }
 
     @Override
@@ -266,7 +220,9 @@ public class LoggerProxy extends java.util.logging.Logger {
     }
 
     public void info(Component component) {
-        logger.info(convertComponentToLogacyComponent(component));
+        if (logger.isLoggable(Level.INFO)) {
+            logger.info(convertComponentToLogacyComponent(component));
+        }
     }
 
     @Override
@@ -275,7 +231,9 @@ public class LoggerProxy extends java.util.logging.Logger {
     }
 
     public void config(Component component) {
-        logger.config(convertComponentToLogacyComponent(component));
+        if (logger.isLoggable(Level.CONFIG)) {
+            logger.config(convertComponentToLogacyComponent(component));
+        }
     }
 
     @Override
@@ -284,7 +242,9 @@ public class LoggerProxy extends java.util.logging.Logger {
     }
 
     public void fine(Component component) {
-        logger.fine(convertComponentToLogacyComponent(component));
+        if (logger.isLoggable(Level.FINE)) {
+            logger.fine(convertComponentToLogacyComponent(component));
+        }
     }
 
     @Override
@@ -293,7 +253,9 @@ public class LoggerProxy extends java.util.logging.Logger {
     }
 
     public void finer(Component component) {
-        logger.finer(convertComponentToLogacyComponent(component));
+        if (logger.isLoggable(Level.FINER)) {
+            logger.finer(convertComponentToLogacyComponent(component));
+        }
     }
 
     @Override
@@ -302,7 +264,9 @@ public class LoggerProxy extends java.util.logging.Logger {
     }
 
     public void finest(Component component) {
-        logger.finest(convertComponentToLogacyComponent(component));
+        if (logger.isLoggable(Level.FINEST)) {
+            logger.finest(convertComponentToLogacyComponent(component));
+        }
     }
 
     @Override

@@ -1,7 +1,6 @@
 package fr.farmvivi.pterodactylautostarter.bungee.listener;
 
 import fr.farmvivi.pterodactylautostarter.bungee.ping.BungeeServerPing;
-import fr.farmvivi.pterodactylautostarter.common.CommonProxy;
 import fr.farmvivi.pterodactylautostarter.common.event.ProxyPingEvent;
 import fr.farmvivi.pterodactylautostarter.common.listener.EventListener;
 import fr.farmvivi.pterodactylautostarter.common.ping.CommonServerPing;
@@ -11,11 +10,9 @@ import net.md_5.bungee.event.EventHandler;
 import java.util.Collection;
 
 public class BungeeProxyPingEventListener implements Listener {
-    private final CommonProxy proxy;
     private final Collection<EventListener> eventListeners;
 
-    public BungeeProxyPingEventListener(CommonProxy proxy, Collection<EventListener> eventListeners) {
-        this.proxy = proxy;
+    public BungeeProxyPingEventListener(Collection<EventListener> eventListeners) {
         this.eventListeners = eventListeners;
     }
 

@@ -10,6 +10,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class MinecraftServer {
@@ -17,7 +18,7 @@ public class MinecraftServer {
 
     private final CommonServer server;
     private final ClientServer pterodactylServer;
-    private final LinkedList<CommonPlayer> queue = new LinkedList<>();
+    private final List<CommonPlayer> queue = new LinkedList<>();
     private MinecraftServerStatus status = MinecraftServerStatus.OFFLINE;
     private CommonServerPing serverPing;
     private long lastBusyTime = System.currentTimeMillis();
@@ -35,7 +36,7 @@ public class MinecraftServer {
     }
 
     private synchronized void checkServerStatus() {
-        server.ping((result) -> {
+        server.ping(result -> {
             long curMillis = System.currentTimeMillis();
             updateServerStatus(result, curMillis);
             handleQueueAndShutdown(result, curMillis);
@@ -142,7 +143,7 @@ public class MinecraftServer {
         return server;
     }
 
-    public LinkedList<CommonPlayer> getQueue() {
+    public List<CommonPlayer> getQueue() {
         return queue;
     }
 

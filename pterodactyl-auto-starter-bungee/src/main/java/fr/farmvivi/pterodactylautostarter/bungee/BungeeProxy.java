@@ -43,23 +43,13 @@ public class BungeeProxy implements CommonProxy, EventListener {
 
     @Override
     public CommonServer getServer(String name) {
-        // Try to get the server from the cache
-        BungeeServer bungeeServer = serversCache.get(name);
-        // If the server is not in the cache
-        if (bungeeServer == null) {
+        // Retrieve or create the server using computeIfAbsent
+        return serversCache.computeIfAbsent(name, k -> {
             // Try to retrieve the server data from BungeeCord
-            ServerInfo server = proxyServer.getServerInfo(name);
-            // If the server exists
-            if (server != null) {
-                // Create the server
-                bungeeServer = new BungeeServer(server);
-                // Cache the server
-                serversCache.put(name, bungeeServer);
-            }
-        }
-
-        // Return the server
-        return bungeeServer;
+            ServerInfo server = proxyServer.getServerInfo(k);
+            // If the server exists, create and cache it
+            return server != null ? new BungeeServer(server) : null;
+        });
     }
 
     @Override
@@ -80,23 +70,13 @@ public class BungeeProxy implements CommonProxy, EventListener {
 
     @Override
     public CommonPlayer getPlayer(UUID uuid) {
-        // Try to get the player from the cache
-        BungeePlayer bungeePlayer = playersCache.get(uuid);
-        // If the player is not in the cache
-        if (bungeePlayer == null) {
+        // Retrieve or create the player using computeIfAbsent
+        return playersCache.computeIfAbsent(uuid, k -> {
             // Try to retrieve the player data from BungeeCord
-            ProxiedPlayer player = proxyServer.getPlayer(uuid);
-            // If the player exists
-            if (player != null) {
-                // Create the player
-                bungeePlayer = new BungeePlayer(this, player);
-                // Cache the player
-                playersCache.put(uuid, bungeePlayer);
-            }
-        }
-
-        // Return the player
-        return bungeePlayer;
+            ProxiedPlayer player = proxyServer.getPlayer(k);
+            // If the player exists, create and cache it
+            return player != null ? new BungeePlayer(this, player) : null;
+        });
     }
 
     @Override

@@ -20,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -36,7 +37,7 @@ public final class PterodactylAutoStarter {
         try {
             properties.load(PterodactylAutoStarter.class.getClassLoader().getResourceAsStream("project.properties"));
         } catch (IOException e) {
-            System.out.println("ERROR: Cannot read properties file ! Using default values");
+            System.err.println("ERROR: Cannot read properties file! Using default values");
             System.exit(1);
         }
 
@@ -170,7 +171,7 @@ public final class PterodactylAutoStarter {
         return plugin;
     }
 
-    public HashMap<CommonServer, MinecraftServer> getServers() {
+    public Map<CommonServer, MinecraftServer> getServers() {
         return servers;
     }
 

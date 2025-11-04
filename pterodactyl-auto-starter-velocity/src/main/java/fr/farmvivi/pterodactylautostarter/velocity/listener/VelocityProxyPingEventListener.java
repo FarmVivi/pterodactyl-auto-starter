@@ -7,17 +7,15 @@ import fr.farmvivi.pterodactylautostarter.common.listener.EventListener;
 import fr.farmvivi.pterodactylautostarter.common.ping.CommonServerPing;
 import fr.farmvivi.pterodactylautostarter.velocity.ping.VelocityServerPing;
 
+import java.net.InetSocketAddress;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 public class VelocityProxyPingEventListener {
-    private final Logger logger;
-    private final CommonProxy proxy;
     private final Collection<EventListener> eventListeners;
 
     public VelocityProxyPingEventListener(Logger logger, CommonProxy proxy, Collection<EventListener> eventListeners) {
-        this.logger = logger;
-        this.proxy = proxy;
         this.eventListeners = eventListeners;
     }
 
@@ -26,8 +24,9 @@ public class VelocityProxyPingEventListener {
         String host = null;
 
         // Get the host
-        if (event.getConnection().getVirtualHost().isPresent()) {
-            host = event.getConnection().getVirtualHost().get().getHostString();
+        Optional<InetSocketAddress> virtualHost = event.getConnection().getVirtualHost();
+        if (virtualHost.isPresent()) {
+            host = virtualHost.get().getHostString();
         }
 
         // Construct the event

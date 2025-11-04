@@ -5,18 +5,30 @@ import fr.farmvivi.pterodactylautostarter.common.event.ProxyPingEvent;
 import fr.farmvivi.pterodactylautostarter.common.event.ServerConnectEvent;
 
 public class EventAdapter implements EventListener {
+    /**
+     * Default no-op implementation for subclasses that don't need this event.
+     * Subclasses can override this method to handle player disconnect events.
+     */
     @Override
     public void onPlayerDisconnect(PlayerDisconnectEvent event) {
-        // Default no-op implementation for subclasses that don't need this event
+        // This is a default implementation for EventAdapter pattern
     }
 
+    /**
+     * Default no-op implementation for subclasses that don't need this event.
+     * Subclasses can override this method to handle proxy ping events.
+     */
     @Override
     public void onProxyPing(ProxyPingEvent event) {
-        // Default no-op implementation for subclasses that don't need this event
+        // This is a default implementation for EventAdapter pattern
     }
 
+    /**
+     * Default no-op implementation for subclasses that don't need this event.
+     * Subclasses can override this method to handle server connect events.
+     */
     @Override
     public void onServerConnect(ServerConnectEvent event) {
-        // Default no-op implementation for subclasses that don't need this event
+        // This is a default implementation for EventAdapter pattern
     }
 }
