@@ -22,6 +22,8 @@ public class MinecraftServer {
     private MinecraftServerStatus status = MinecraftServerStatus.OFFLINE;
     private CommonServerPing serverPing;
     private long lastBusyTime = System.currentTimeMillis();
+    private long serverStartedTime = 0;
+    private long lastTeleportTime = 0;
 
     public MinecraftServer(PterodactylAutoStarter plugin, CommonServer server, ClientServer pterodactylServer) {
         this.plugin = plugin;
@@ -31,15 +33,32 @@ public class MinecraftServer {
         scheduleServerStatusCheck();
     }
 
+    /**
+     * Scheduler adaptatif : utilise un refresh rate plus rapide pendant le démarrage
+     */
     private void scheduleServerStatusCheck() {
-        this.plugin.getProxy().schedule(plugin.getPlugin(), this::checkServerStatus, 0, 15, TimeUnit.SECONDS);
+        checkServerStatusAndReschedule();
     }
 
-    private synchronized void checkServerStatus() {
+    private void checkServerStatusAndReschedule() {
+        // Obtenir les paramètres de configuration
+        long normalCheckInterval = plugin.getConfig().getLong("server-start.check-interval-normal", 15);
+        long startupCheckInterval = plugin.getConfig().getLong("server-start.check-interval-startup", 3);
+
+        // Déterminer l'intervalle à utiliser
+        long checkInterval = status.equals(MinecraftServerStatus.STARTING) ? startupCheckInterval : normalCheckInterval;
+
+        // Faire le check
         server.ping(result -> {
             long curMillis = System.currentTimeMillis();
             updateServerStatus(result, curMillis);
             handleQueueAndShutdown(result, curMillis);
+
+            // Re-scheduler avec l'intervalle approprié
+            this.plugin.getProxy().schedule(plugin.getPlugin(), 
+                this::checkServerStatusAndReschedule, 
+                checkInterval, 
+                TimeUnit.SECONDS);
         });
     }
 
@@ -49,11 +68,13 @@ public class MinecraftServer {
                 return;
             }
             status = MinecraftServerStatus.ONLINE;
+            serverStartedTime = curMillis;  // Enregistrer l'heure de démarrage
             logServerStatus("en ligne", NamedTextColor.GREEN);
         } else if (shouldSetOffline(result, curMillis)) {
             status = MinecraftServerStatus.OFFLINE;
             logServerStatus("hors-ligne", NamedTextColor.RED);
             clearQueue();
+            serverStartedTime = 0;
         }
         serverPing = result;
     }
@@ -84,7 +105,7 @@ public class MinecraftServer {
 
     private void handleQueueAndShutdown(CommonServerPing result, long curMillis) {
         if (status.equals(MinecraftServerStatus.ONLINE)) {
-            handleQueue();
+            handleQueue(curMillis);
             updateLastBusyTime(result, curMillis);
             if (curMillis - lastBusyTime > 5 * 60 * 1000) {
                 stop();
@@ -92,17 +113,50 @@ public class MinecraftServer {
         }
     }
 
-    private void handleQueue() {
-        if (!queue.isEmpty()) {
-            Iterator<CommonPlayer> iterator = queue.iterator();
-            while (iterator.hasNext()) {
-                CommonPlayer player = iterator.next();
-                if (player.getServer().equals(server)) {
-                    iterator.remove();
-                    continue;
-                }
-                teleportPlayer(player);
+    /**
+     * Gère la file d'attente avec un délai configurable entre chaque téléportation
+     * et un délai d'attente avant de commencer les téléportations après le démarrage du serveur
+     */
+    private void handleQueue(long curMillis) {
+        if (queue.isEmpty()) {
+            return;
+        }
+
+        // Obtenir les paramètres de configuration
+        long waitBeforeTeleport = plugin.getConfig().getLong("server-start.wait-before-teleport", 5) * 1000;
+        long teleportDelay = plugin.getConfig().getLong("server-start.teleport-delay", 1) * 1000;
+
+        // Attendre un certain temps après le démarrage avant de TP les joueurs
+        if (curMillis - serverStartedTime < waitBeforeTeleport) {
+            return;
+        }
+
+        // Vérifier si on peut TP le prochain joueur (délai minimum entre les TP)
+        if (curMillis - lastTeleportTime < teleportDelay) {
+            return;
+        }
+
+        // Trouver le premier joueur à téléporter (pas déjà sur le serveur)
+        CommonPlayer playerToTeleport = null;
+        int playerIndex = -1;
+        
+        for (int i = 0; i < queue.size(); i++) {
+            CommonPlayer player = queue.get(i);
+            if (!player.getServer().equals(server)) {
+                playerToTeleport = player;
+                playerIndex = i;
+                break;
             }
+        }
+
+        // Si on a trouvé un joueur à téléporter
+        if (playerToTeleport != null) {
+            teleportPlayer(playerToTeleport);
+            queue.remove(playerIndex);
+            lastTeleportTime = curMillis;
+        } else {
+            // Nettoyer les joueurs déjà sur le serveur
+            queue.removeIf(player -> player.getServer().equals(server));
         }
     }
 
@@ -128,6 +182,7 @@ public class MinecraftServer {
         this.pterodactylServer.start().executeAsync();
         this.lastBusyTime = System.currentTimeMillis() + 15 * 60 * 1000;
         this.status = MinecraftServerStatus.STARTING;
+        this.lastTeleportTime = 0;  // Réinitialiser le timer de téléportation
     }
 
     public synchronized void stop() {
