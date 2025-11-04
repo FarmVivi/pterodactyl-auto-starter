@@ -5,16 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>fr.farmvivi.pterodactyl-auto-starter</groupId>
-    <artifactId>pterodactyl-auto-starter</artifactId>
-    <version>2.0.1-SNAPSHOT</version>
+    <artifactId>pterodactyl-auto-starter-parent</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>PterodactylAutoStarter</name>
+    <description>Parent POM for PterodactylAutoStarter multi-module project</description>
 
     <modules>
-        <module>common</module>
-        <module>bungee</module>
-        <module>velocity</module>
+        <module>pterodactyl-auto-starter-common</module>
+        <module>pterodactyl-auto-starter-bungee</module>
+        <module>pterodactyl-auto-starter-velocity</module>
     </modules>
 
     <properties>

@@ -5,43 +5,59 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>fr.farmvivi.pterodactyl-auto-starter</groupId>
-        <artifactId>pterodactyl-auto-starter</artifactId>
+        <artifactId>pterodactyl-auto-starter-parent</artifactId>
         <version>2.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>pterodactyl-auto-starter-velocity</artifactId>
-    <name>PterodactylAutoStarter-Velocity</name>
+    <artifactId>pterodactyl-auto-starter-common</artifactId>
+    <name>PterodactylAutoStarter-Common</name>
 
     <repositories>
         <repository>
-            <id>papermc</id>
-            <url>https://repo.papermc.io/repository/maven-public/</url>
+            <id>mattmalec-repo</id>
+            <url>https://repo.mattmalec.com/repository/releases</url>
         </repository>
     </repositories>
 
     <dependencies>
-        <!-- Pterodactyl Auto Starter Common -->
-        <dependency>
-            <groupId>fr.farmvivi.pterodactyl-auto-starter</groupId>
-            <artifactId>pterodactyl-auto-starter-common</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- Adventure Text Serializer Legacy -->
+        <!-- Adventure API -->
         <dependency>
             <groupId>net.kyori</groupId>
-            <artifactId>adventure-text-serializer-legacy</artifactId>
+            <artifactId>adventure-api</artifactId>
             <version>4.25.0</version>
             <scope>compile</scope>
         </dependency>
 
-        <!-- Velocity API -->
+        <!-- Adventure Text Serializer ANSI -->
         <dependency>
-            <groupId>com.velocitypowered</groupId>
-            <artifactId>velocity-api</artifactId>
-            <version>3.3.0-SNAPSHOT</version>
-            <scope>provided</scope>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-serializer-ansi</artifactId>
+            <version>4.25.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- ANSI -->
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>ansi</artifactId>
+            <version>1.1.1</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Pterodactyl4J -->
+        <dependency>
+            <groupId>com.mattmalec</groupId>
+            <artifactId>Pterodactyl4J</artifactId>
+            <version>2.BETA_142</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.md-5/bungeecord-config -->
+        <dependency>
+            <groupId>net.md-5</groupId>
+            <artifactId>bungeecord-config</artifactId>
+            <version>1.21-R0.4</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/junit/junit -->
