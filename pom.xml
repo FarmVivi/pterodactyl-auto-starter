@@ -21,7 +21,120 @@
     <properties>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Dependency versions -->
+        <adventure.version>4.25.0</adventure.version>
+        <kyori.ansi.version>1.1.1</kyori.ansi.version>
+        <pterodactyl4j.version>2.BETA_142</pterodactyl4j.version>
+        <waterfall.version>1.21-R0.1-SNAPSHOT</waterfall.version>
+        <velocity.version>3.3.0-SNAPSHOT</velocity.version>
+        <junit.version>4.13.2</junit.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>maven_central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+
+        <repository>
+            <id>papermc</id>
+            <name>PaperMC</name>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+
+        <repository>
+            <id>mattmalec-repo</id>
+            <name>Mattmalec Repository</name>
+            <url>https://repo.mattmalec.com/repository/releases</url>
+        </repository>
+    </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Internal modules -->
+            <dependency>
+                <groupId>fr.farmvivi.pterodactyl-auto-starter</groupId>
+                <artifactId>pterodactyl-auto-starter-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- Adventure API -->
+            <dependency>
+                <groupId>net.kyori</groupId>
+                <artifactId>adventure-api</artifactId>
+                <version>${adventure.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- Adventure Text Serializer ANSI -->
+            <dependency>
+                <groupId>net.kyori</groupId>
+                <artifactId>adventure-text-serializer-ansi</artifactId>
+                <version>${adventure.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- Adventure Text Serializer Legacy -->
+            <dependency>
+                <groupId>net.kyori</groupId>
+                <artifactId>adventure-text-serializer-legacy</artifactId>
+                <version>${adventure.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- ANSI -->
+            <dependency>
+                <groupId>net.kyori</groupId>
+                <artifactId>ansi</artifactId>
+                <version>${kyori.ansi.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- Pterodactyl4J -->
+            <dependency>
+                <groupId>com.mattmalec</groupId>
+                <artifactId>Pterodactyl4J</artifactId>
+                <version>${pterodactyl4j.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- Waterfall API -->
+            <dependency>
+                <groupId>io.github.waterfallmc</groupId>
+                <artifactId>waterfall-api</artifactId>
+                <version>${waterfall.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- Velocity API -->
+            <dependency>
+                <groupId>com.velocitypowered</groupId>
+                <artifactId>velocity-api</artifactId>
+                <version>${velocity.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- JUnit -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.12.0</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <profiles>
         <profile>
@@ -54,107 +167,30 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!--                    <plugin>-->
-                    <!--                        <groupId>org.apache.maven.plugins</groupId>-->
-                    <!--                        <artifactId>maven-gpg-plugin</artifactId>-->
-                    <!--                        <version>3.2.4</version>-->
-                    <!--                        <executions>-->
-                    <!--                            <execution>-->
-                    <!--                                <id>sign-artifacts</id>-->
-                    <!--                                <phase>verify</phase>-->
-                    <!--                                <goals>-->
-                    <!--                                    <goal>sign</goal>-->
-                    <!--                                </goals>-->
-                    <!--                            </execution>-->
-                    <!--                        </executions>-->
-                    <!--                    </plugin>-->
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Profil pour l'analyse SonarQube -->
+        <profile>
+            <id>sonar</id>
+            <properties>
+                <sonar.skip>false</sonar.skip>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonarsource.scanner.maven</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
+                        <version>5.2.0.4988</version>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
     </profiles>
 
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.12.0</version>
-            </plugin>
-        </plugins>
-    </reporting>
-
     <build>
         <defaultGoal>clean package</defaultGoal>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.14.1</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.6.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>templating-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <id>filter-src</id>
-                        <goals>
-                            <goal>filter-sources</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>3.21.0</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.trajano.wagon</groupId>
-                        <artifactId>wagon-git</artifactId>
-                        <version>2.0.4</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.maven.doxia</groupId>
-                        <artifactId>doxia-module-markdown</artifactId>
-                        <version>2.0.0</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>3.1.1</version>
-                <configuration>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <tagNameFormat>@{project.version}</tagNameFormat>
-                    <scmCommentPrefix xml:space="preserve">[RELEASE] </scmCommentPrefix>
-                    <goals>install deploy site-deploy
-                    </goals> <!-- install is here to fix javadoc generation in multi-module projects -->
-                    <releaseProfiles>release</releaseProfiles>
-                </configuration>
-            </plugin>
-        </plugins>
 
         <pluginManagement>
             <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
@@ -172,6 +208,10 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.14.1</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
@@ -180,6 +220,21 @@
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>3.4.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>3.6.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>3.6.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>templating-maven-plugin</artifactId>
+                    <version>3.0.0</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-install-plugin</artifactId>
@@ -198,7 +253,22 @@
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>3.9.0</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>3.1.1</version>
+                    <configuration>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                        <tagNameFormat>@{project.version}</tagNameFormat>
+                        <scmCommentPrefix xml:space="preserve">[RELEASE] </scmCommentPrefix>
+                        <goals>install deploy site-deploy</goals>
+                        <releaseProfiles>release</releaseProfiles>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
+
+        <!-- Pas de configuration exec ici pour ne pas interférer avec les modules -->
+        <plugins/>
     </build>
 </project>
