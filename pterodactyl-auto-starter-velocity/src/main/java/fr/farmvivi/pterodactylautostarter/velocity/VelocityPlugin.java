@@ -50,7 +50,7 @@ public class VelocityPlugin implements CommonPlugin {
         // Registering the event listeners
         this.logger.info("Registering Velocity event listeners...");
         this.server.getEventManager().register(this, new VelocityServerConnectEventListener(proxy, eventListeners));
-        this.server.getEventManager().register(this, new VelocityProxyPingEventListener(logger, proxy, eventListeners));
+        this.server.getEventManager().register(this, new VelocityProxyPingEventListener(eventListeners));
         this.server.getEventManager().register(this, new VelocityPlayerDisconnectEventListener(proxy, eventListeners));
         this.logger.info("Velocity Event listeners registered.");
     }

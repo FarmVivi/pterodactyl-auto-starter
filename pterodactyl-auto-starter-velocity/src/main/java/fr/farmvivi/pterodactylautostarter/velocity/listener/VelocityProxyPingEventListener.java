@@ -1,7 +1,6 @@
 package fr.farmvivi.pterodactylautostarter.velocity.listener;
 
 import com.velocitypowered.api.event.Subscribe;
-import fr.farmvivi.pterodactylautostarter.common.CommonProxy;
 import fr.farmvivi.pterodactylautostarter.common.event.ProxyPingEvent;
 import fr.farmvivi.pterodactylautostarter.common.listener.EventListener;
 import fr.farmvivi.pterodactylautostarter.common.ping.CommonServerPing;
@@ -10,12 +9,11 @@ import fr.farmvivi.pterodactylautostarter.velocity.ping.VelocityServerPing;
 import java.net.InetSocketAddress;
 import java.util.Collection;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 public class VelocityProxyPingEventListener {
     private final Collection<EventListener> eventListeners;
 
-    public VelocityProxyPingEventListener(Logger logger, CommonProxy proxy, Collection<EventListener> eventListeners) {
+    public VelocityProxyPingEventListener(Collection<EventListener> eventListeners) {
         this.eventListeners = eventListeners;
     }
 
