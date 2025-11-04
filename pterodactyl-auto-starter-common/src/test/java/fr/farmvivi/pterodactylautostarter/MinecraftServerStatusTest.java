@@ -42,9 +42,9 @@ public class MinecraftServerStatusTest {
         assertNotEquals(offline, online);
 
         // Les états doivent être égaux à eux-mêmes
-        assertEquals(offline, MinecraftServerStatus.OFFLINE);
-        assertEquals(starting, MinecraftServerStatus.STARTING);
-        assertEquals(online, MinecraftServerStatus.ONLINE);
+        assertEquals(MinecraftServerStatus.OFFLINE, offline);
+        assertEquals(MinecraftServerStatus.STARTING, starting);
+        assertEquals(MinecraftServerStatus.ONLINE, online);
     }
 
     /**
