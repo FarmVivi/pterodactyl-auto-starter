@@ -22,6 +22,13 @@
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <!-- Configuration SonarCloud -->
+        <sonar.projectKey>FarmVivi_pterodactyl-auto-starter</sonar.projectKey>
+        <sonar.organization>farmvivi</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <!-- Skip sonar analysis by default - enable with -Psonar profile -->
+        <sonar.skip>true</sonar.skip>
+
         <!-- Dependency versions -->
         <adventure.version>4.25.0</adventure.version>
         <kyori.ansi.version>1.1.1</kyori.ansi.version>
