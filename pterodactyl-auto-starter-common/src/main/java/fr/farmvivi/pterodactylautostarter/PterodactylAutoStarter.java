@@ -27,9 +27,10 @@ import java.util.logging.Logger;
 import static java.util.logging.Level.SEVERE;
 
 public final class PterodactylAutoStarter {
-    public static final String NAME = "PterodactylAutoStarter";
+    public static final String NAME = PterodactylAutoStarter.class.getSimpleName();
     public static final String VERSION;
     public static final boolean PRODUCTION;
+    private static final Logger LOGGER = Logger.getLogger(PterodactylAutoStarter.class.getName());
     private static PterodactylAutoStarter instance;
 
     static {
@@ -37,7 +38,7 @@ public final class PterodactylAutoStarter {
         try {
             properties.load(PterodactylAutoStarter.class.getClassLoader().getResourceAsStream("project.properties"));
         } catch (IOException e) {
-            System.err.println("ERROR: Cannot read properties file! Using default values");
+            LOGGER.log(SEVERE, "ERROR: Cannot read properties file! Using default values", e);
             System.exit(1);
         }
 
@@ -46,7 +47,7 @@ public final class PterodactylAutoStarter {
     }
 
     private final CommonPlugin plugin;
-    private final LoggerProxy logger;
+    private final LoggerProxy delegateLogger;
     private final HashMap<CommonServer, MinecraftServer> servers = new HashMap<>();
     private CommonProxy proxy;
     private Configuration config;
@@ -54,7 +55,7 @@ public final class PterodactylAutoStarter {
 
     public PterodactylAutoStarter(CommonPlugin plugin, Logger logger) {
         this.plugin = plugin;
-        this.logger = new LoggerProxy(logger);
+        this.delegateLogger = new LoggerProxy(logger);
     }
 
     public static PterodactylAutoStarter getInstance() {
@@ -176,7 +177,7 @@ public final class PterodactylAutoStarter {
     }
 
     public LoggerProxy getLogger() {
-        return logger;
+        return delegateLogger;
     }
 
     public CommonProxy getProxy() {
