@@ -45,8 +45,8 @@ public class LoggerProxy extends Logger {
     }
 
     @Override
-    public void log(LogRecord record) {
-        delegate.log(record);
+    public void log(LogRecord logRecord) {
+        delegate.log(logRecord);
     }
 
     @Override
