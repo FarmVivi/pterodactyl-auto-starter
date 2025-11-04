@@ -31,7 +31,7 @@ public class BungeePlugin extends Plugin implements CommonPlugin {
         // Registering the event listeners
         this.getLogger().info("Registering BungeeCord event listeners...");
         this.getProxy().getPluginManager().registerListener(this, new BungeeServerConnectEventListener(proxy, eventListeners));
-        this.getProxy().getPluginManager().registerListener(this, new BungeeProxyPingEventListener(proxy, eventListeners));
+        this.getProxy().getPluginManager().registerListener(this, new BungeeProxyPingEventListener(eventListeners));
         this.getProxy().getPluginManager().registerListener(this, new BungeePlayerDisconnectEventListener(proxy, eventListeners));
         this.getLogger().info("BungeeCord Event listeners registered.");
     }
