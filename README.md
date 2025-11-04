@@ -30,6 +30,8 @@ servers:
     id: id_du_serveur_pterodactyl
 ```
 
+**Important :** Le nom du serveur (ex: `lobby`) doit correspondre exactement au nom du serveur configuré dans le fichier de configuration de votre proxy (BungeeCord ou Velocity). C'est ce qui permet au plugin de faire la liaison entre la configuration du proxy et les serveurs Pterodactyl.
+
 ## Licence
 
 Projet maintenu par FarmVivi
