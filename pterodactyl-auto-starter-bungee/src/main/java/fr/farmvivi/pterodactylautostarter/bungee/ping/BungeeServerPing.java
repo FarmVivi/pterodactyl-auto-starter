@@ -3,10 +3,9 @@ package fr.farmvivi.pterodactylautostarter.bungee.ping;
 import fr.farmvivi.pterodactylautostarter.common.ping.CommonFavicon;
 import fr.farmvivi.pterodactylautostarter.common.ping.CommonServerPing;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.md_5.bungee.api.ServerPing;
-import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -24,12 +23,13 @@ public class BungeeServerPing implements CommonServerPing {
 
     @Override
     public Component getDescriptionComponent() {
-        return BungeeComponentSerializer.get().deserialize(new BaseComponent[]{serverPing.getDescriptionComponent()});
+        return LegacyComponentSerializer.legacySection().deserialize(serverPing.getDescriptionComponent().toLegacyText());
     }
 
     @Override
     public void setDescriptionComponent(Component descriptionComponent) {
-        serverPing = new ServerPing(serverPing.getVersion(), serverPing.getPlayers(), BungeeComponentSerializer.get().serialize(descriptionComponent)[0], serverPing.getFaviconObject());
+        String legacyMessage = LegacyComponentSerializer.legacySection().serialize(descriptionComponent);
+        serverPing = new ServerPing(serverPing.getVersion(), serverPing.getPlayers(), new TextComponent(legacyMessage), serverPing.getFaviconObject());
     }
 
     @Override

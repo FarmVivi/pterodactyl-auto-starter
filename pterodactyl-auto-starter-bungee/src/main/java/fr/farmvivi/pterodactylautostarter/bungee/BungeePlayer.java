@@ -3,7 +3,8 @@ package fr.farmvivi.pterodactylautostarter.bungee;
 import fr.farmvivi.pterodactylautostarter.common.CommonPlayer;
 import fr.farmvivi.pterodactylautostarter.common.CommonProxy;
 import fr.farmvivi.pterodactylautostarter.common.CommonServer;
-import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -25,9 +26,10 @@ public class BungeePlayer implements CommonPlayer {
     }
 
     @Override
-    public void sendMessage(net.kyori.adventure.text.Component message) {
-        // Convert the message to a legacy text component with BungeeCordComponentSerializer
-        player.sendMessage(BungeeComponentSerializer.get().serialize(message));
+    public void sendMessage(Component message) {
+        // Convert the Component to legacy string format (§-codes)
+        String legacyMessage = LegacyComponentSerializer.legacySection().serialize(message);
+        player.sendMessage(new TextComponent(legacyMessage));
     }
 
     @Override

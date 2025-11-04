@@ -35,6 +35,13 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- BungeeCord Config -->
+        <dependency>
+            <groupId>net.md-5</groupId>
+            <artifactId>bungeecord-config</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- Pterodactyl4J -->
         <dependency>
             <groupId>com.mattmalec</groupId>

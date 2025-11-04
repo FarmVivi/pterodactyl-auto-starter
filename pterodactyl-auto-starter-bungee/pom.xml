@@ -28,6 +28,13 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- Adventure Platform BungeeCord -->
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-platform-bungeecord</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- Waterfall API -->
         <dependency>
             <groupId>io.github.waterfallmc</groupId>
