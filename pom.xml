@@ -30,7 +30,7 @@
         <sonar.skip>true</sonar.skip>
 
         <!-- Dependency versions -->
-        <adventure.version>4.25.0</adventure.version>
+        <adventure.version>4.26.1</adventure.version>
         <kyori.ansi.version>1.1.1</kyori.ansi.version>
         <bungeecord.version>1.21-R0.4</bungeecord.version>
         <adventure.platform.version>4.4.1</adventure.platform.version>
