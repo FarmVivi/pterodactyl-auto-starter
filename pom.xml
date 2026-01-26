@@ -36,7 +36,7 @@
         <adventure.platform.version>4.4.1</adventure.platform.version>
         <pterodactyl4j.version>2.BETA_142</pterodactyl4j.version>
         <waterfall.version>1.21-R0.1-SNAPSHOT</waterfall.version>
-        <velocity.version>3.3.0-SNAPSHOT</velocity.version>
+        <velocity.version>3.4.0</velocity.version>
         <junit.version>4.13.2</junit.version>
         <mockito.version>5.21.0</mockito.version>
     </properties>
